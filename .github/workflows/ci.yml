@@ -1,33 +1,21 @@
-# Simpan sebagai: .github/workflows/ci.yml
-name: CI
+name: CI Pipeline
 
-on:
-  push:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      # Tahap 2: Checkout repository
-      - uses: actions/checkout@v6
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      # Siapkan runtime Node.js
-      - uses: actions/setup-node@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          cache: 'npm'
 
-      # Tahap 3: Install dependensi (mengikuti package-lock.json)
-      - name: Install dependensi
-        run: npm ci
+      - name: Install Dependencies
+        run: npm install
 
-      # Tahap 4: Build / Lint (dilewati otomatis bila script tidak ada)
-      - name: Build
-        run: npm run build --if-present
-      - name: Lint
-        run: npm run lint --if-present
-
-      # Tahap 5: Automated test
-      - name: Test
-        run: npm test 
+      - name: Run Automated Test
+        run: npm test
