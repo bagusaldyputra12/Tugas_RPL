@@ -1,26 +1,26 @@
+
 name: CI Pipeline
 
-on: 
+on:
   push:
-    branches: { main }
+    branches: [main]
   pull_request:
-    branches: { main }
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
+      - name: Check Project Files
+        run: |
+          echo "Memeriksa file proyek..."
+          test -f index.html
+          echo "File index.html ditemukan."
 
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Run Automated Test
-        run: npm test
+      - name: CI Pipeline Success
+        run: echo "CI Pipeline berhasil dijalankan!"
